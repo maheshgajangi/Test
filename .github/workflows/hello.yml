@@ -1,13 +1,19 @@
-name: Say Hello and Time
+name: Java CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  greet:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Say Hello
-        run: echo "👋 Hello! This is your first GitHub Action."
 
-      - name: Print Current Date & Time
-        run: date
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn clean install
